@@ -1,0 +1,13 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "https://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <weaver options="-verbose -showWeaveInfo">
+        <include within="ioc..*"/>
+        <include within="tests..*"/>
+    </weaver>
+    <aspects>
+        <aspect name="ioc.aop.DriverAop"/>
+        <aspect name="ioc.aop.PagesAop"/>
+        <aspect name="ioc.aop.ElementsAop"/>
+        <aspect name="ioc.aop.LogsAop"/>
+    </aspects>
+</aspectj>
