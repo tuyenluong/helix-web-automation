@@ -10,7 +10,6 @@ public class TestNgRunner extends TestNG {
 
     public TestNgRunner() {}
 
-    @Parameters()
-    public TestNgRunner(Class<?>[] classes, List<String> testNames, int threadCount, XmlSuite.ParallelMode  parallelMode) {
+    public TestNgRunner() {
     }
 }
