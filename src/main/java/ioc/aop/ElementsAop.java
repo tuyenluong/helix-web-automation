@@ -18,7 +18,7 @@ public class ElementsAop {
         System.out.println(">>> ElementsAop class loaded");
     }
 
-    @Pointcut("@annotation(org.openqa.selenium.support.FindBy) && withincode(* tests.pages.*.*(..))")
+    @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*)")
     public void findByPointcut() {}
 
     @Before("findByPointcut()")

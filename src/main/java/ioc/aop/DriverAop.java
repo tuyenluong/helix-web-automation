@@ -13,15 +13,21 @@ public class DriverAop {
         System.out.println(">>> DriverAop class loaded");
     }
 
-    @Pointcut("@annotation(org.testng.annotations.Test) || withincode(* tests.pages.*.*(..))")
-    public void driverPointCut() {}
+    @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*)")
+    public void driverPointCutPages() {}
 
+    @Pointcut("get(private org.openqa.selenium.WebElement tests.test.*.*)")
+    public void driverPointCutTests() {}
+
+    @Pointcut("driverPointCutPages() || driverPointCutTests()")
+    public void driverPointCut() {}
 
     @Before("driverPointCut()")
     public void getDriverMethodAdvice(JoinPoint jp) {
         // careful: jp.getThis() is the object doing the read; jp.getTarget() or the signature can help find the field owner
         Object owner = jp.getTarget(); // often the owning object when access is 'this.driver'
-        injectDriverFields(owner);     // or locate the declaring class and set field on instance if needed
+        injectDriverFields(owner);
+        System.out.println();// or locate the declaring class and set field on instance if needed
     }
 
     private void injectDriverFields(Object obj) {

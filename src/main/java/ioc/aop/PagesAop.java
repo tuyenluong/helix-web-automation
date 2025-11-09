@@ -17,7 +17,8 @@ public class PagesAop {
         System.out.println(">>> PagesAop class loaded");
     }
 
-    @Pointcut("@annotation(org.testng.annotations.Test) || @annotation(ioc.annotations.Inject)")
+    @Pointcut("(withincode(* tests.pages.*.*(..)) || withincode(* tests.tests.*.*(..)) ) && " +
+            "@annotation(ioc.annotations.Inject)")
     public void pagePointcut() {}
 
     @Before("pagePointcut()")

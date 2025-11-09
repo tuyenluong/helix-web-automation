@@ -3,22 +3,20 @@ package tests.tests;
 import ioc.annotations.Driver;
 import ioc.session.WebDriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class UsingOneDriverForOneUsingMultipleDriverForEachTestMethodClass {
 
     @Driver
     private WebDriver driver;
 
-    @BeforeSuite
+    @BeforeClass
     public void beforeClass(){
         WebDriverFactory.getDriver();
         System.out.println(WebDriverFactory.getDriver().hashCode());
     }
 
-    @AfterSuite
+    @AfterClass
     public void afterClass() {
         System.out.println("Closing");
         WebDriverFactory.quitDriver();

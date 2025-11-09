@@ -9,9 +9,6 @@ import tests.pages.LoginPage;
 
 public class UsingMultipleDriverForEachTestMethod {
 
-    @Driver
-    private WebDriver driver;
-
     @Inject
     private LoginPage loginPage;
 
@@ -36,6 +33,6 @@ public class UsingMultipleDriverForEachTestMethod {
     @Test
     public void testTitle2() {
         loginPage.initViblo();
-        System.out.println("Title: " + driver.getTitle() + 2);
+        System.out.println("Title: " + loginPage.getPageTitle() + 2);
     }
 }
