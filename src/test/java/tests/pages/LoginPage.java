@@ -4,7 +4,7 @@ import ioc.annotations.Component;
 import ioc.annotations.Driver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.*;
 
 @Component
 public class LoginPage {
@@ -14,7 +14,6 @@ public class LoginPage {
 
     @FindBy(xpath = "//header//a[@title='Báo VnExpress - Báo tiếng Việt nhiều người xem nhất']")
     private WebElement vnExpress_title;
-
 
     public void initVnexpress() {
         driver.get("https://vnexpress.net/");

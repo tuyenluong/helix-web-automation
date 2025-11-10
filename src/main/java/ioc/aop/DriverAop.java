@@ -13,16 +13,13 @@ public class DriverAop {
         System.out.println(">>> DriverAop class loaded");
     }
 
-    @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*)")
+    @Pointcut("get(private org.openqa.selenium.WebDriver tests.pages.*.*)")
     public void driverPointCutPagesPackage() {}
 
-    @Pointcut("get(private org.openqa.selenium.WebElement tests.test.*.*)")
+    @Pointcut("get(private org.openqa.selenium.WebDriver tests.test.*.*)")
     public void driverPointCutTestsPackage() {}
 
-//    @Pointcut("driverPointCutPagesPackage() || driverPointCutTestsPackage()")
-//    public void driverPointCut() {}
-
-    @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*) || get(private org.openqa.selenium.WebElement tests.test.*.*)")
+    @Pointcut("driverPointCutPagesPackage() || driverPointCutTestsPackage()")
     public void driverPointCut() {}
 
     @Before("driverPointCut()")

@@ -1,10 +1,13 @@
 package ioc.aop;
 
 import ioc.annotations.Inject;
+import ioc.session.WebDriverFactory;
+import ioc.wrappers.RobustFieldDecorator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.openqa.selenium.support.PageFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -17,7 +20,8 @@ public class PagesAop {
         System.out.println(">>> PagesAop class loaded");
     }
 
-    @Pointcut("(withincode(* tests.pages.*.*(..)) || withincode(* tests.tests.*.*(..)) ) && " +
+    @Pointcut("( (within(tests.pages..*) || within(tests.tests..*)) ) && " +
+            "!within(ioc..*) &&" +
             "@annotation(ioc.annotations.Inject)")
     public void pagePointcut() {}
 
@@ -46,6 +50,7 @@ public class PagesAop {
                             e.printStackTrace();
                         }
                         f.set(object, instance);
+                        PageFactory.initElements(new RobustFieldDecorator(WebDriverFactory.getDriver(),3,3),instance);
                         System.out.println("[PagesAop] Injected Pages into " + object.getClass().getName() + "." + f.getName());
                     }
                 } catch (Exception e) {
