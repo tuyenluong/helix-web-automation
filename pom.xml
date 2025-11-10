@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.hellix</groupId>
   <artifactId>web-automation</artifactId>
   <version>1.0-SNAPSHOT</version>
+
   <name>Helix - Web Automation</name>
   <url>http://maven.apache.org</url>
 
@@ -19,13 +20,6 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>4.14.0</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
-    <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-      <version>0.9.11</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
@@ -68,6 +62,23 @@
 
   <build>
     <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.1.2</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/deps</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -83,4 +94,87 @@
     </plugins>
   </build>
 
+  <profiles>
+        <profile>
+            <id>unix-jlink</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>generate-deps-and-jlink-unix</id>
+                                <phase>package</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>bash</executable>
+                                    <arguments>
+                                        <argument>-lc</argument>
+                                        <argument>
+                                            <![CDATA[
+                    jdeps --ignore-missing-deps -q --recursive --multi-release 21 \
+                      --print-module-deps --class-path target/deps/* \
+                      target/web-automation-1.0-SNAPSHOT.jar > deps.info
+                    MODULES=$(cat deps.info)
+                    jlink --add-modules "$MODULES" --strip-debug --compress 2 \
+                      --no-header-files --no-man-pages --output target/helix-jre
+                  ]]>
+                                        </argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>windows-jlink</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>generate-deps-and-jlink-windows</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>powershell</executable>
+                                    <arguments>
+                                        <argument>-NoProfile</argument>
+                                        <argument>-Command</argument>
+                                        <argument>
+                                            jdeps --ignore-missing-deps -q --recursive --multi-release 21 `
+                                            --print-module-deps --class-path target\deps\* `
+                                            target\web-automation-1.0-SNAPSHOT.jar | Out-File -Encoding UTF8 deps.info;
+                                            $mods = Get-Content deps.info;
+                                            jlink --add-modules $mods --strip-debug --compress 2 `
+                                            --no-header-files --no-man-pages --output target\helix-jre
+                                        </argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
