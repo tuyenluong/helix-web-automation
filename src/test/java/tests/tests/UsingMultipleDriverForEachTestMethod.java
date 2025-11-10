@@ -1,9 +1,7 @@
 package tests.tests;
 
-import ioc.annotations.Driver;
 import ioc.annotations.Inject;
 import ioc.session.WebDriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import tests.pages.LoginPage;
 

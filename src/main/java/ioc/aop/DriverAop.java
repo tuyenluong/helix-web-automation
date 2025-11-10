@@ -14,12 +14,15 @@ public class DriverAop {
     }
 
     @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*)")
-    public void driverPointCutPages() {}
+    public void driverPointCutPagesPackage() {}
 
     @Pointcut("get(private org.openqa.selenium.WebElement tests.test.*.*)")
-    public void driverPointCutTests() {}
+    public void driverPointCutTestsPackage() {}
 
-    @Pointcut("driverPointCutPages() || driverPointCutTests()")
+//    @Pointcut("driverPointCutPagesPackage() || driverPointCutTestsPackage()")
+//    public void driverPointCut() {}
+
+    @Pointcut("get(private org.openqa.selenium.WebElement tests.pages.*.*) || get(private org.openqa.selenium.WebElement tests.test.*.*)")
     public void driverPointCut() {}
 
     @Before("driverPointCut()")
@@ -27,7 +30,6 @@ public class DriverAop {
         // careful: jp.getThis() is the object doing the read; jp.getTarget() or the signature can help find the field owner
         Object owner = jp.getTarget(); // often the owning object when access is 'this.driver'
         injectDriverFields(owner);
-        System.out.println();// or locate the declaring class and set field on instance if needed
     }
 
     private void injectDriverFields(Object obj) {
