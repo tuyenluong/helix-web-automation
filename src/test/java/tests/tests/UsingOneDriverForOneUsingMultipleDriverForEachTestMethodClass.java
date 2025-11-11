@@ -1,26 +1,15 @@
 package tests.tests;
 
 import ioc.annotations.Driver;
-import ioc.session.WebDriverFactory;
+import ioc.listeners.SuiteListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
+@Listeners(SuiteListener.class)
 public class UsingOneDriverForOneUsingMultipleDriverForEachTestMethodClass {
 
     @Driver
     private WebDriver driver;
-
-    @BeforeClass
-    public void beforeClass(){
-        WebDriverFactory.getDriver();
-        System.out.println(WebDriverFactory.getDriver().hashCode());
-    }
-
-    @AfterClass
-    public void afterClass() {
-        System.out.println("Closing");
-        WebDriverFactory.quitDriver();
-    }
 
     @Test
     public void testTitle1() {

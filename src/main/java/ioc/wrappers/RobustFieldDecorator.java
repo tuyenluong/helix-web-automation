@@ -1,6 +1,6 @@
 package ioc.wrappers;
 
-import ioc.session.WebDriverFactory;
+import ioc.session.SessionFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +10,6 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.*;
 import java.lang.reflect.Proxy;
@@ -142,7 +141,7 @@ public class RobustFieldDecorator implements FieldDecorator {
                 }
 
                 Exception last = null;
-                WebDriver driver = WebDriverFactory.getDriver();
+                WebDriver driver = SessionFactory.getSession().getWebDriver();
 
                 for (int attempt = 1; attempt <= Math.max(1, maxRetries); attempt++) {
                     try {

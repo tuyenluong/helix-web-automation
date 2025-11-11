@@ -1,7 +1,7 @@
 package ioc.aop;
 
 import ioc.annotations.Inject;
-import ioc.session.WebDriverFactory;
+import ioc.session.SessionFactory;
 import ioc.wrappers.RobustFieldDecorator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -44,13 +44,13 @@ public class PagesAop {
                         Object instance = null;
                         try {
                             Constructor<?> constructor = f.getType().getConstructor();
-                            instance = constructor.newInstance(); // Invoke constructor with arguments
+                            instance = constructor.newInstance();
                         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                             // Handle exceptions
                             e.printStackTrace();
                         }
                         f.set(object, instance);
-                        PageFactory.initElements(new RobustFieldDecorator(WebDriverFactory.getDriver(),3,3),instance);
+                        PageFactory.initElements(new RobustFieldDecorator(SessionFactory.getSession().getWebDriver(),3,3),instance);
                         System.out.println("[PagesAop] Injected Pages into " + object.getClass().getName() + "." + f.getName());
                     }
                 } catch (Exception e) {

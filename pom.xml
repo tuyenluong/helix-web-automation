@@ -12,6 +12,8 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <aspectj.version>1.9.22.1</aspectj.version>
     </properties>
 
@@ -62,6 +64,18 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${maven.compiler.source}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -120,8 +134,8 @@
                                             <![CDATA[
                                                 jdeps --ignore-missing-deps -q --recursive --multi-release 21 \
                                                   --print-module-deps --class-path target/deps/* \
-                                                  target/web-automation-1.0-SNAPSHOT.jar > deps.info
-                                                MODULES=$(cat deps.info)
+                                                  target/web-automation-1.0-SNAPSHOT.jar > target/deps.info
+                                                MODULES=$(cat target/deps.info)
                                                 jlink --add-modules "$MODULES" --strip-debug --compress 2 \
                                                   --no-header-files --no-man-pages --output target/helix-jre
                                               ]]>
@@ -173,8 +187,8 @@
                                         <argument>
                                             jdeps --ignore-missing-deps -q --recursive --multi-release 21 `
                                             --print-module-deps --class-path target\deps\* `
-                                            target\web-automation-1.0-SNAPSHOT.jar | Out-File -Encoding UTF8 deps.info;
-                                            $mods = Get-Content deps.info;
+                                            target\web-automation-1.0-SNAPSHOT.jar | Out-File -Encoding UTF8 target\deps.info;
+                                            $mods = Get-Content target\deps.info;
                                             jlink --add-modules $mods --strip-debug --compress 2 `
                                             --no-header-files --no-man-pages --output target\helix-jre
                                         </argument>

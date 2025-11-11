@@ -1,26 +1,19 @@
 package tests.tests;
 
 import ioc.annotations.Inject;
-import ioc.session.WebDriverFactory;
+import ioc.annotations.Session;
+import ioc.listeners.SuiteListener;
 import org.testng.annotations.*;
 import tests.pages.LoginPage;
 
+@Listeners(SuiteListener.class)
 public class UsingMultipleDriverForEachTestMethod {
+
+    @Session
+    private ioc.api.Session session;
 
     @Inject
     private LoginPage loginPage;
-
-    @BeforeMethod
-    public void beforeTest(){
-        WebDriverFactory.getDriver();
-        System.out.println(WebDriverFactory.getDriver().hashCode());
-    }
-
-    @AfterMethod
-    public void afterTest(){
-        System.out.println("Closing");
-        WebDriverFactory.quitDriver();
-    }
 
     @Test
     public void testTitle1() {

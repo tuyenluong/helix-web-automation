@@ -1,14 +1,20 @@
 package ioc.aop;
 
 import ioc.annotations.Driver;
-import ioc.session.WebDriverFactory;
+import ioc.annotations.Session;
+import ioc.selenium.BrowserDriverManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 @Aspect
 public class DriverAop {
+
+    @Session
+    private ioc.api.Session session;
+
     static {
         System.out.println(">>> DriverAop class loaded");
     }
@@ -39,7 +45,10 @@ public class DriverAop {
                     f.setAccessible(true);
                     Object current = f.get(obj);
                     if (current == null) {
-                        Object driver = WebDriverFactory.getDriver();
+                        if(Objects.isNull(session.getWebDriver())){
+                            session.setWebDriver(BrowserDriverManager.chromeDriver());
+                        }
+                        Object driver = session.getWebDriver();
                         f.set(obj, driver);
                         System.out.println("[DriverAop] Injected WebDriver into " + cls.getName() + "." + f.getName());
                     }
