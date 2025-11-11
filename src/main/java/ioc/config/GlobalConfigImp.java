@@ -1,6 +1,6 @@
 package ioc.config;
 
-import ioc.api.GlobalConfig;
+import ioc.GlobalConfig;
 
 public class GlobalConfigImp implements GlobalConfig {
 

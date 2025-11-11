@@ -1,8 +1,8 @@
-package ioc.api;
+package ioc;
 
 import org.openqa.selenium.WebDriver;
 
-public interface Session {
+public interface Sessions {
 
     void setWebDriver(WebDriver webDriver);
 

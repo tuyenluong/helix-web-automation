@@ -1,6 +1,6 @@
 package ioc.data;
 
-import ioc.api.TestDataManagement;
+import ioc.TestDataManagement;
 
 public class TestDataManagementImp implements TestDataManagement {
 

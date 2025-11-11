@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ChromeDriverManager {
 
-    @Getter
     private WebDriver driver;
     private WebDriverManager webDriverManager;
     private ChromeOptions opts;
@@ -23,6 +22,10 @@ public class ChromeDriverManager {
         webDriverManager.clearDriverCache().clearResolutionCache();
         webDriverManager.capabilities(opts);
         driver = webDriverManager.create();
+    }
+
+    public WebDriver getDriver(){
+        return driver;
     }
 
     public ChromeDriverManager setOptionArguments(String args){

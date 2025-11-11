@@ -14,7 +14,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <aspectj.version>1.9.22.1</aspectj.version>
+        <aspectj.version>1.9.23</aspectj.version>
     </properties>
 
     <dependencies>
@@ -43,7 +43,6 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
-            <scope>runtime</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
@@ -51,7 +50,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>${aspectj.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -66,9 +65,37 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version> <!-- Use a recent version -->
+                <executions>
+                    <execution>
+                        <id>create-custom-jre</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>helix</classifier>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
+                    <executable>${project.basedir}/target/helix-jre/bin/javac</executable>
                     <release>${maven.compiler.source}</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArgs>
@@ -93,9 +120,42 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.15.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <complianceLevel>${maven.compiler.source}</complianceLevel>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <Xlint>ignore</Xlint>
+<!--                    <showWeaveInfo>true</showWeaveInfo>-->
+<!--                    <verbose>true</verbose>-->
+                    <weaveDirectories>
+                        <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
+                        <weaveDirectory>${project.build.testOutputDirectory}</weaveDirectory>
+                    </weaveDirectories>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>unix-jlink</id>
@@ -111,10 +171,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.1.2</version>
                         <configuration>
-                            <argLine>
-                                -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
-                            </argLine>
-                            <useSystemClassLoader>false</useSystemClassLoader>
+<!--                            <jvm>${project.basedir}/target/helix-jre/bin/java</jvm>-->
                         </configuration>
                     </plugin>
                     <plugin>
@@ -162,10 +219,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.1.2</version>
                         <configuration>
-                            <argLine>
-                                -javaagent:${settings.localRepository}\org\aspectj\aspectjweaver\${aspectj.version}\aspectjweaver-${aspectj.version}.jar
-                            </argLine>
-                            <useSystemClassLoader>false</useSystemClassLoader>
+<!--                            <jvm>${project.basedir}/target/helix-jre/bin/java</jvm>-->
                         </configuration>
                     </plugin>
                     <plugin>

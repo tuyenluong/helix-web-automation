@@ -1,7 +1,9 @@
 package ioc.aop;
 
-import ioc.annotations.Driver;
-import ioc.annotations.Session;
+import ioc.Driver;
+import ioc.Sessions;
+import ioc.Session;
+import ioc.constant.AopConstant;
 import ioc.selenium.BrowserDriverManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -13,22 +15,13 @@ import java.util.Objects;
 public class DriverAop {
 
     @Session
-    private ioc.api.Session session;
+    private Sessions sessions;
 
     static {
         System.out.println(">>> DriverAop class loaded");
     }
 
-    @Pointcut("get(private org.openqa.selenium.WebDriver tests.pages.*.*)")
-    public void driverPointCutPagesPackage() {}
-
-    @Pointcut("get(private org.openqa.selenium.WebDriver tests.test.*.*)")
-    public void driverPointCutTestsPackage() {}
-
-    @Pointcut("driverPointCutPagesPackage() || driverPointCutTestsPackage()")
-    public void driverPointCut() {}
-
-    @Before("driverPointCut()")
+    @Before(AopConstant.WEBDRIVER_POINT_CUT)
     public void getDriverMethodAdvice(JoinPoint jp) {
         // careful: jp.getThis() is the object doing the read; jp.getTarget() or the signature can help find the field owner
         Object owner = jp.getTarget(); // often the owning object when access is 'this.driver'
@@ -45,10 +38,10 @@ public class DriverAop {
                     f.setAccessible(true);
                     Object current = f.get(obj);
                     if (current == null) {
-                        if(Objects.isNull(session.getWebDriver())){
-                            session.setWebDriver(BrowserDriverManager.chromeDriver());
+                        if(Objects.isNull(sessions.getWebDriver())){
+                            sessions.setWebDriver(BrowserDriverManager.chromeDriver());
                         }
-                        Object driver = session.getWebDriver();
+                        Object driver = sessions.getWebDriver();
                         f.set(obj, driver);
                         System.out.println("[DriverAop] Injected WebDriver into " + cls.getName() + "." + f.getName());
                     }

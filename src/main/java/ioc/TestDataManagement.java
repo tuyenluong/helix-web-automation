@@ -1,4 +1,4 @@
-package ioc.api;
+package ioc;
 
 import ioc.data.LocalData;
 

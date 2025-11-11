@@ -1,6 +1,6 @@
 package tests.tests;
 
-import ioc.annotations.Data;
+import ioc.Data;
 import ioc.data.LocalData;
 import ioc.listeners.SuiteListener;
 import org.testng.annotations.DataProvider;

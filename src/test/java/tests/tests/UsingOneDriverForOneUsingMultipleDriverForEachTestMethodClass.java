@@ -1,6 +1,6 @@
 package tests.tests;
 
-import ioc.annotations.Driver;
+import ioc.Driver;
 import ioc.listeners.SuiteListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;

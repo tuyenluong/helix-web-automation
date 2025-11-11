@@ -1,12 +1,12 @@
 package ioc.aop;
 
-import ioc.annotations.Inject;
-import ioc.session.SessionFactory;
-import ioc.wrappers.RobustFieldDecorator;
+import ioc.Inject;
+import ioc.Session;
+import ioc.Sessions;
+import ioc.constant.AopConstant;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.openqa.selenium.support.PageFactory;
 
 import java.lang.reflect.Constructor;
@@ -16,16 +16,14 @@ import java.lang.reflect.InvocationTargetException;
 @Aspect
 public class PagesAop {
 
+    @Session
+    private Sessions session;
+
     static {
         System.out.println(">>> PagesAop class loaded");
     }
 
-    @Pointcut("( (within(tests.pages..*) || within(tests.tests..*)) ) && " +
-            "!within(ioc..*) &&" +
-            "@annotation(ioc.annotations.Inject)")
-    public void pagePointcut() {}
-
-    @Before("pagePointcut()")
+    @Before(AopConstant.INJECT_ANNOTATION_PAGE_POINT_CUT)
     public void pagePointcut(JoinPoint jp){
         Object owner = jp.getTarget();
         initPageObject(owner);
@@ -50,7 +48,8 @@ public class PagesAop {
                             e.printStackTrace();
                         }
                         f.set(object, instance);
-                        PageFactory.initElements(new RobustFieldDecorator(SessionFactory.getSession().getWebDriver(),3,3),instance);
+//                        PageFactory.initElements(new RobustFieldDecorator(session.getWebDriver(),3,3),instance);
+//                        PageFactory.initElements(session.getWebDriver(),instance);
                         System.out.println("[PagesAop] Injected Pages into " + object.getClass().getName() + "." + f.getName());
                     }
                 } catch (Exception e) {

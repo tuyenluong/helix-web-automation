@@ -1,8 +1,9 @@
 package ioc.aop;
 
-import ioc.annotations.Session;
+import ioc.Session;
+import ioc.constant.AopConstant;
 import ioc.session.SessionFactory;
-import ioc.session.SessionImp;
+import ioc.session.SessionsImp;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,13 +19,13 @@ public class SessionAOP {
         System.out.println(">>> SessionAOP class loaded");
     }
 
-    @Pointcut("execution(void ioc.listeners.SuiteListener.onStart(..))")
+    @Pointcut(AopConstant.SESSIONS_ON_START_SUITE_LISTENER_POINT_CUT)
     public void onStartSessionSuitePointCut() {}
 
-    @Pointcut("execution(void ioc.listeners.SuiteListener.onFinish(..))")
+    @Pointcut(AopConstant.SESSIONS_ON_FINISH_SUITE_LISTENER_POINT_CUT)
     public void onFinishSessionSuitePointCut() {}
 
-    @Pointcut("get(private ioc.api.Session ioc.*.*.*) || get(private ioc.api.Session tests.*.*.*)")
+    @Pointcut(AopConstant.SESSIONS_FIELD_POINT_CUT)
     public void getSessionPointCut() {}
 
     @Before("getSessionPointCut() || onStartSessionSuitePointCut()")
@@ -50,7 +51,7 @@ public class SessionAOP {
                     Object current = f.get(obj);
                     if (Objects.isNull(current)) {
                         if(Objects.isNull(SessionFactory.getSession())){
-                            SessionFactory.setSession(new SessionImp());
+                            SessionFactory.setSession(new SessionsImp());
                         }
                         Object session = SessionFactory.getSession();
                         f.set(obj, session);

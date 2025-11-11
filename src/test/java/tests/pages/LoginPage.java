@@ -1,8 +1,9 @@
 package tests.pages;
 
-import ioc.annotations.Component;
-import ioc.annotations.Driver;
-import ioc.annotations.Session;
+import ioc.Sessions;
+import ioc.Component;
+import ioc.Driver;
+import ioc.Session;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.*;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.*;
 public class LoginPage {
 
     @Session
-    private ioc.api.Session session;
+    private Sessions sessions;
 
     @Driver
     private WebDriver driver;
@@ -19,16 +20,18 @@ public class LoginPage {
     @FindBy(xpath = "//header//a[@title='Báo VnExpress - Báo tiếng Việt nhiều người xem nhất']")
     private WebElement vnExpress_title;
 
-    public void initVnexpress() {
+    public LoginPage initVnexpress() {
         driver.get("https://vnexpress.net/");
+        return this;
     }
 
-    public void initViblo() {
+    public LoginPage initViblo() {
         driver.get("https://viblo.asia/");
+        return this;
     }
 
     public String getPageTitle(){
-        System.out.println("Driver from Session field: "+ session.getWebDriver().hashCode());
+        System.out.println("Driver from Session field: "+ sessions.getWebDriver().hashCode());
         System.out.println("Driver from Driver field: "+ driver.hashCode());
         return vnExpress_title.getAttribute("title");
     }

@@ -40,3 +40,6 @@ build/
 
 ### TestNG
 /test-output
+
+### ajs
+aj*.txt

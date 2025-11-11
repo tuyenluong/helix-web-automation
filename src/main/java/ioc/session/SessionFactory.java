@@ -1,18 +1,18 @@
 package ioc.session;
 
-import ioc.api.Session;
+import ioc.Sessions;
 
 import java.util.Objects;
 
 public class SessionFactory {
-    private static final ThreadLocal<Session> sessions = new ThreadLocal<>();
+    private static final ThreadLocal<Sessions> sessions = new ThreadLocal<>();
 
-    public static Session getSession() {
+    public static Sessions getSession() {
         return sessions.get();
     }
 
-    public static void setSession(Session session) {
-        sessions.set(session);
+    public static void setSession(Sessions sessions) {
+        SessionFactory.sessions.set(sessions);
     }
 
     public static void removeSession(){

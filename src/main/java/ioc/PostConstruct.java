@@ -1,9 +1,9 @@
-package ioc.annotations;
+package ioc;
 
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface PreDestroy {
+public @interface PostConstruct {
 
 }
