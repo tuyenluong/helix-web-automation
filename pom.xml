@@ -137,8 +137,8 @@
                     <target>${maven.compiler.source}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <Xlint>ignore</Xlint>
-<!--                    <showWeaveInfo>true</showWeaveInfo>-->
-<!--                    <verbose>true</verbose>-->
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <verbose>true</verbose>
                     <weaveDirectories>
                         <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
                         <weaveDirectory>${project.build.testOutputDirectory}</weaveDirectory>
@@ -170,9 +170,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.1.2</version>
-                        <configuration>
-<!--                            <jvm>${project.basedir}/target/helix-jre/bin/java</jvm>-->
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -218,9 +215,18 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>3.1.2</version>
-                        <configuration>
-<!--                            <jvm>${project.basedir}/target/helix-jre/bin/java</jvm>-->
-                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>helix-jre-test</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <jvm>${project.basedir}/target/helix-jre/bin/java</jvm>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>

@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class SuiteListener implements ISuiteListener {
 
-
     @Session
     private Sessions sessions;
 

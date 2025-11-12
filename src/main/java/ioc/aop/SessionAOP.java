@@ -28,8 +28,13 @@ public class SessionAOP {
     @Pointcut(AopConstant.SESSIONS_FIELD_POINT_CUT)
     public void getSessionPointCut() {}
 
-    @Before("getSessionPointCut() || onStartSessionSuitePointCut()")
-    public void getSessionMethodAdvice(JoinPoint jp) {
+    @Before("onStartSessionSuitePointCut()")
+    public void onStartSessionAdvice(JoinPoint jp) {
+        Object owner = jp.getTarget();
+        injectSession(owner);
+    }
+    @Before("getSessionPointCut()")
+    public void onFieldGetSessionAdvice(JoinPoint jp) {
         Object owner = jp.getTarget();
         injectSession(owner);
     }
