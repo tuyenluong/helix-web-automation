@@ -1,17 +1,18 @@
 package tests.tests;
 
-import ioc.Sessions;
+import ioc.AnnoTestSession;
+import ioc.ITestSession;
 import ioc.Inject;
-import ioc.Session;
 import ioc.listeners.SuiteListener;
+import ioc.listeners.TestListener;
 import org.testng.annotations.*;
 import tests.pages.LoginPage;
 
-@Listeners(SuiteListener.class)
+@Listeners({SuiteListener.class, TestListener.class})
 public class UsingMultipleDriverForEachTestMethod {
 
-    @Session
-    private Sessions sessions;
+    @AnnoTestSession
+    private ITestSession iTestSession;
 
     @Inject
     private LoginPage loginPage;

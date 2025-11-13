@@ -1,23 +1,23 @@
 package ioc.session;
 
-import ioc.Sessions;
+import ioc.ITestSession;
 
 import java.util.Objects;
 
 public class SessionFactory {
-    private static final ThreadLocal<Sessions> sessions = new ThreadLocal<>();
+    private static final ThreadLocal<ITestSession> iTestSessions = new ThreadLocal<>();
 
-    public static Sessions getSession() {
-        return sessions.get();
+    public static ITestSession getSession() {
+        return iTestSessions.get();
     }
 
-    public static void setSession(Sessions sessions) {
-        SessionFactory.sessions.set(sessions);
+    public static void setSession(ITestSession iTestSession) {
+        iTestSessions.set(iTestSession);
     }
 
     public static void removeSession(){
-        if(Objects.nonNull(sessions.get())){
-            sessions.remove();
+        if(Objects.nonNull(iTestSessions.get())){
+            iTestSessions.remove();
         }
     }
 }

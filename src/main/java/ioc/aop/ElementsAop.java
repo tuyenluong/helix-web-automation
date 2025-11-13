@@ -1,25 +1,22 @@
 package ioc.aop;
 
-import ioc.Session;
-import ioc.Sessions;
+import ioc.AnnoTestSession;
+import ioc.ITestSession;
 import ioc.constant.AopConstant;
 import ioc.session.SessionFactory;
 import ioc.wrappers.FindByBuilt;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 @Aspect
 public class ElementsAop {
-
-    @Session
-    private Sessions sessions;
 
     static {
         System.out.println(">>> ElementsAop class loaded");
@@ -46,9 +43,9 @@ public class ElementsAop {
                 try {
                     f.setAccessible(true);
                     Object current = f.get(object);
-                    if (current == null) {
+                    if (Objects.isNull(current)) {
                         By byElement = new FindByBuilt().buildIt(f.getAnnotation(FindBy.class),f);
-                        WebElement element = sessions.getWebDriver().findElement(byElement);
+                        WebElement element = SessionFactory.getSession().getWebDriver().findElement(byElement);
                         f.set(object, element);
                         System.out.println("[ElementsAop] Injected Elements into " + object.getClass().getName() + "." + f.getName());
                     }

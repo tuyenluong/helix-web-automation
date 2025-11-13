@@ -2,7 +2,7 @@ package ioc;
 
 import org.openqa.selenium.WebDriver;
 
-public interface Sessions {
+public interface ITestSession {
 
     void setWebDriver(WebDriver webDriver);
 

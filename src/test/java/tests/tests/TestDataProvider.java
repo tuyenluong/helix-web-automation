@@ -3,11 +3,12 @@ package tests.tests;
 import ioc.Data;
 import ioc.data.LocalData;
 import ioc.listeners.SuiteListener;
+import ioc.listeners.TestListener;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners({SuiteListener.class})
+@Listeners({SuiteListener.class, TestListener.class})
 public class TestDataProvider {
     @DataProvider(name = "primeNumbers")
     public static Object[][] primeNumbers() throws ClassNotFoundException, NoSuchMethodException {

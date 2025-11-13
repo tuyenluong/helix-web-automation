@@ -1,8 +1,8 @@
 package ioc.aop;
 
+import ioc.AnnoTestSession;
+import ioc.ITestSession;
 import ioc.Inject;
-import ioc.Session;
-import ioc.Sessions;
 import ioc.constant.AopConstant;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,9 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 
 @Aspect
 public class PagesAop {
-
-    @Session
-    private Sessions session;
 
     static {
         System.out.println(">>> PagesAop class loaded");

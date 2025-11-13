@@ -9,6 +9,6 @@
 <!--        <aspect name="ioc.aop.PagesAop"/>-->
 <!--&lt;!&ndash;        <aspect name="ioc.aop.ElementsAop"/>&ndash;&gt;-->
 <!--        <aspect name="ioc.aop.LogsAop"/>-->
-<!--        <aspect name="ioc.aop.SessionAOP"/>-->
+<!--        <aspect name="ioc.aop.TestSessionAOP"/>-->
 <!--    </aspects>-->
 <!--</aspectj>-->

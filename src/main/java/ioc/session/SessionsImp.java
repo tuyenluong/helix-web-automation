@@ -1,10 +1,10 @@
 package ioc.session;
 
-import ioc.Sessions;
+import ioc.ITestSession;
 import ioc.TestDataManagement;
 import org.openqa.selenium.WebDriver;
 
-public class SessionsImp implements Sessions {
+public class SessionsImp implements ITestSession {
 
     private WebDriver webDriver;
     private TestDataManagement testDataManagement;

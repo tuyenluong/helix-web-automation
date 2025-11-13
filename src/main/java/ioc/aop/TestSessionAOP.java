@@ -1,6 +1,6 @@
 package ioc.aop;
 
-import ioc.Session;
+import ioc.AnnoTestSession;
 import ioc.constant.AopConstant;
 import ioc.session.SessionFactory;
 import ioc.session.SessionsImp;
@@ -14,15 +14,15 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 
 @Aspect
-public class SessionAOP {
+public class TestSessionAOP {
     static {
         System.out.println(">>> SessionAOP class loaded");
     }
 
-    @Pointcut(AopConstant.SESSIONS_ON_START_SUITE_LISTENER_POINT_CUT)
+    @Pointcut(AopConstant.SESSIONS_ON_START_TEST_LISTENER_POINT_CUT)
     public void onStartSessionSuitePointCut() {}
 
-    @Pointcut(AopConstant.SESSIONS_ON_FINISH_SUITE_LISTENER_POINT_CUT)
+    @Pointcut(AopConstant.SESSIONS_ON_FINISH_TEST_LISTENER_POINT_CUT)
     public void onFinishSessionSuitePointCut() {}
 
     @Pointcut(AopConstant.SESSIONS_FIELD_POINT_CUT)
@@ -49,7 +49,7 @@ public class SessionAOP {
         if (obj == null) return;
         Class<?> cls = obj.getClass();
         for (Field f : cls.getDeclaredFields()) {
-            if (f.isAnnotationPresent(Session.class)) {
+            if (f.isAnnotationPresent(AnnoTestSession.class)) {
                 boolean accessible = f.canAccess(obj);
                 try {
                     f.setAccessible(true);
@@ -74,7 +74,7 @@ public class SessionAOP {
         if (obj == null) return;
         Class<?> cls = obj.getClass();
         for (Field f : cls.getDeclaredFields()) {
-            if (f.isAnnotationPresent(Session.class)) {
+            if (f.isAnnotationPresent(AnnoTestSession.class)) {
                 boolean accessible = f.canAccess(obj);
                 try {
                     f.setAccessible(true);

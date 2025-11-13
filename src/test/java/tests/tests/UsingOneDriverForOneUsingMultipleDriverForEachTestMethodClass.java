@@ -2,10 +2,11 @@ package tests.tests;
 
 import ioc.Driver;
 import ioc.listeners.SuiteListener;
+import ioc.listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
-@Listeners(SuiteListener.class)
+@Listeners({SuiteListener.class, TestListener.class})
 public class UsingOneDriverForOneUsingMultipleDriverForEachTestMethodClass {
 
     @Driver
