@@ -19,27 +19,18 @@ public class TestSessionAOP {
         System.out.println(">>> SessionAOP class loaded");
     }
 
-    @Pointcut(AopConstant.SESSIONS_ON_START_TEST_LISTENER_POINT_CUT)
-    public void onStartSessionSuitePointCut() {}
-
-    @Pointcut(AopConstant.SESSIONS_ON_FINISH_TEST_LISTENER_POINT_CUT)
-    public void onFinishSessionSuitePointCut() {}
-
-    @Pointcut(AopConstant.SESSIONS_FIELD_POINT_CUT)
-    public void getSessionPointCut() {}
-
-    @Before("onStartSessionSuitePointCut()")
+    @Before(AopConstant.SESSIONS_ON_START_TEST_LISTENER_POINT_CUT)
     public void onStartSessionAdvice(JoinPoint jp) {
         Object owner = jp.getTarget();
         injectSession(owner);
     }
-    @Before("getSessionPointCut()")
+    @Before(AopConstant.SESSIONS_FIELD_POINT_CUT)
     public void onFieldGetSessionAdvice(JoinPoint jp) {
         Object owner = jp.getTarget();
         injectSession(owner);
     }
 
-    @After("onFinishSessionSuitePointCut()")
+    @After(AopConstant.SESSIONS_ON_FINISH_TEST_LISTENER_POINT_CUT)
     public void removeSessionMethodAdvice(JoinPoint jp) {
         Object owner = jp.getTarget();
         removeSession(owner);
@@ -60,7 +51,7 @@ public class TestSessionAOP {
                         }
                         Object session = SessionFactory.getSession();
                         f.set(obj, session);
-                        System.out.println("[SessionAOP] Injected Session into " + cls.getName() + "." + f.getName());
+                        System.out.println("[TestSessionAOP] Injected Session into " + cls.getName() + "." + f.getName());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -82,7 +73,7 @@ public class TestSessionAOP {
                     if (Objects.nonNull(current)) {
                         SessionFactory.removeSession();
                         f.set(obj, null);
-                        System.out.println("[SessionAOP] Remove Session at " + cls.getName() + "." + f.getName());
+                        System.out.println("[TestSessionAOP] Remove Session at " + cls.getName() + "." + f.getName());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

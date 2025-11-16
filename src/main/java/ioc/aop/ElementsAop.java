@@ -1,7 +1,5 @@
 package ioc.aop;
 
-import ioc.AnnoTestSession;
-import ioc.ITestSession;
 import ioc.constant.AopConstant;
 import ioc.session.SessionFactory;
 import ioc.wrappers.FindByBuilt;
@@ -21,12 +19,6 @@ public class ElementsAop {
     static {
         System.out.println(">>> ElementsAop class loaded");
     }
-
-//    @Pointcut(AopConstant.FIND_BY_FIELD_POINT_CUT)
-//    public void findByPointcut() {}
-//
-//    @Pointcut("pointcutInPackage() && @annotation(org.openqa.selenium.support.FindBys)")
-//    public void findBysPointcut() {}
 
     @Before(AopConstant.FIND_BY_FIELD_POINT_CUT)
     public void findByAdvice(JoinPoint jp) {

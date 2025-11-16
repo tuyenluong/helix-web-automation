@@ -17,7 +17,7 @@ public class UsingMultipleDriverForEachTestMethod {
     @Inject
     private LoginPage loginPage;
 
-    @Test
+    @Test()
     public void testTitle1() {
         System.out.println("Title: " + loginPage.initVnexpress().getPageTitle());
     }

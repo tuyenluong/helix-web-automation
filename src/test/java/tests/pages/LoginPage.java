@@ -1,9 +1,6 @@
 package tests.pages;
 
-import ioc.AnnoTestSession;
-import ioc.ITestSession;
-import ioc.Component;
-import ioc.Driver;
+import ioc.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.*;
