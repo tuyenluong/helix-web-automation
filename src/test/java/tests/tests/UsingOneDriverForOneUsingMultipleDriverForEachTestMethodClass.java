@@ -1,8 +1,8 @@
 package tests.tests;
 
-import ioc.Driver;
-import ioc.listeners.SuiteListener;
-import ioc.listeners.TestListener;
+import helix.Driver;
+import helix.listeners.SuiteListener;
+import helix.listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 

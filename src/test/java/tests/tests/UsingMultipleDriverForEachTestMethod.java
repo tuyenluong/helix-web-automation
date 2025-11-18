@@ -1,10 +1,10 @@
 package tests.tests;
 
-import ioc.AnnoTestSession;
-import ioc.ITestSession;
-import ioc.Inject;
-import ioc.listeners.SuiteListener;
-import ioc.listeners.TestListener;
+import helix.AnnoTestSession;
+import helix.ITestSession;
+import helix.Inject;
+import helix.listeners.SuiteListener;
+import helix.listeners.TestListener;
 import org.testng.annotations.*;
 import tests.pages.LoginPage;
 

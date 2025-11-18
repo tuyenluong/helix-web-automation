@@ -1,14 +1,14 @@
 <!--<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "https://www.eclipse.org/aspectj/dtd/aspectj.dtd">-->
 <!--<aspectj>-->
 <!--    <weaver options="-verbose -showWeaveInfo">-->
-<!--        <include within="ioc..*"/>-->
+<!--        <include within="helix..*"/>-->
 <!--        <include within="tests..*"/>-->
 <!--    </weaver>-->
 <!--    <aspects>-->
-<!--        <aspect name="ioc.aop.DriverAop"/>-->
-<!--        <aspect name="ioc.aop.PagesAop"/>-->
-<!--&lt;!&ndash;        <aspect name="ioc.aop.ElementsAop"/>&ndash;&gt;-->
-<!--        <aspect name="ioc.aop.LogsAop"/>-->
-<!--        <aspect name="ioc.aop.TestSessionAOP"/>-->
+<!--        <aspect name="helix.aop.DriverAop"/>-->
+<!--        <aspect name="helix.aop.PagesAop"/>-->
+<!--&lt;!&ndash;        <aspect name="helix.aop.ElementsAop"/>&ndash;&gt;-->
+<!--        <aspect name="helix.aop.LogsAop"/>-->
+<!--        <aspect name="helix.aop.TestSessionAOP"/>-->
 <!--    </aspects>-->
 <!--</aspectj>-->

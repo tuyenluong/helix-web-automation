@@ -1,9 +1,9 @@
 package tests.tests;
 
-import ioc.Data;
-import ioc.data.LocalData;
-import ioc.listeners.SuiteListener;
-import ioc.listeners.TestListener;
+import helix.Data;
+import helix.data.LocalData;
+import helix.listeners.SuiteListener;
+import helix.listeners.TestListener;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -25,7 +25,6 @@ public class TestDataProvider {
     }
 
     @Test(dataProvider = "primeNumbers")
-    @Data()
     public void testDataProvider(LocalData data) {
         System.out.println("Test count: "+ data.getCount() + ", hashCode: " + data.hashCode());
     }

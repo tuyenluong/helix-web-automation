@@ -1,6 +1,6 @@
 package tests.pages;
 
-import ioc.*;
+import helix.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.*;
@@ -16,6 +16,16 @@ public class LoginPage {
 
     @FindBy(xpath = "//header//a[@title='Báo VnExpress - Báo tiếng Việt nhiều người xem nhất']")
     private WebElement vnExpress_title;
+
+    @FindBys({
+            @FindBy(xpath = "//header//a[@title='Báo VnExpress - Báo tiếng Việt nhiều người xem nhất']")
+    })
+    private WebElement vnExpress_title1;
+
+    @FindAll({
+            @FindBy(xpath = "//header//a[@title='Báo VnExpress - Báo tiếng Việt nhiều người xem nhất']")
+    })
+    private WebElement vnExpress_title2;
 
     public LoginPage initVnexpress() {
         System.out.println("Open page vnexpress");
