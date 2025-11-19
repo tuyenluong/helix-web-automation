@@ -48,7 +48,7 @@ public class TestSessionAOP {
                         if(Objects.isNull(SessionFactory.getSession())){
                             SessionFactory.setSession(new SessionsImp());
                         }
-                        Object session = SessionFactory.getSession();
+                        Object session = SessionFactory.getSession(); // <<<<
                         f.set(obj, session);
                         System.out.println("[TestSessionAOP] Injected Session into " + cls.getName() + "." + f.getName());
                     }

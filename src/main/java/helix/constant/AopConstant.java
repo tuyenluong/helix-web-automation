@@ -13,6 +13,7 @@ public class AopConstant {
     // suite listener start/finish - keep as-is (explicit)
     public static final String SESSIONS_ON_START_TEST_LISTENER_POINT_CUT =
             "execution(void helix.listeners.TestListener.onTestStart(..))";
+
     public static final String SESSIONS_ON_FINISH_TEST_LISTENER_POINT_CUT =
             "execution(void helix.listeners.TestListener.onTestSuccess(..)) || " +
             "execution(void helix.listeners.TestListener.onTestFailure(..)) || " +
